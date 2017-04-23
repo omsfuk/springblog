@@ -2,6 +2,7 @@ package cn.omsfuk.blog.service.impl;
 
 import cn.omsfuk.blog.dao.PostDao;
 import cn.omsfuk.blog.dao.TagDao;
+import cn.omsfuk.blog.error.exception.NotFoundException;
 import cn.omsfuk.blog.model.Post;
 import cn.omsfuk.blog.model.Tag;
 import cn.omsfuk.blog.service.PostService;
@@ -47,7 +48,20 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public int deletePost(Integer id) {
-        return postDao.deletePost(id);
+        int res = postDao.deletePost(id);
+        if(res == 0) {
+            throw new NotFoundException();
+        }
+
+        return res;
+    }
+
+    @Override
+    public boolean isPostExist(Integer id) {
+        if(postDao.getPostById(id) == null) {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -66,6 +80,29 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> getPostsByTag(String tag) {
         return postDao.getPostsByTag(tag);
+    }
+
+    @Override
+    public int getPostsCount() {
+        Integer res = postDao.getPostsCount();
+        if(res == null) {
+            res = 0;
+        }
+        return res;
+    }
+
+    @Override
+    public int updatePost(Post post) {
+        if(postDao.getPostById(post.getId()) == null) {
+            throw new NotFoundException();
+        }
+        post.setTdate(new Date(System.currentTimeMillis()));
+        return postDao.updatePost(post);
+    }
+
+    @Override
+    public Post getPostById(Integer id) {
+        return postDao.getPostById(id);
     }
 
 }

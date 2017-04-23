@@ -7,11 +7,14 @@ package cn.omsfuk.blog.dao;
 import cn.omsfuk.blog.model.Post;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by omsfuk on 17-4-16.
  */
 public interface PostDao {
+
+    public Integer getPostsCount();
 
     public List<Post> getAllPosts(Integer page);
 
@@ -21,11 +24,14 @@ public interface PostDao {
 
     public List<Post> getPostsByTag(String tag);
 
-    public int insertPost(Post post);
+    public Integer insertPost(Post post);
 
-    public int updatePost(Post post);
+    public Integer updatePost(Post post);
 
-    public int deletePost(Integer id);
+    public Integer deletePost(Integer id);
 
     public int incVtime(Integer id);
+
+    public Integer updateTags(Map<String, String> map);
+
 }

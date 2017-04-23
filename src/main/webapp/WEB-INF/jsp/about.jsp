@@ -11,7 +11,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Home</title>
+    <title>About</title>
     <link href="/css/home.css" rel="stylesheet" />
     <link href="/css/font-awesome.min.css" rel="stylesheet" />
 </head>

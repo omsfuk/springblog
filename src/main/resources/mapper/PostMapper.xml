@@ -33,6 +33,9 @@
     <select id="getPostsByTag" parameterType="java.lang.String" resultMap="post">
         select * from post where find_in_set(#{tag}, tags)
     </select>
+    <select id="getPostsCount" resultType="java.lang.Integer">
+        select count(*) from post;
+    </select>
     <!--访问次数递增-->
     <update id="incVtime" parameterType="java.lang.Integer">
         update post set vtime = vtime + 1 where id = #{id}
@@ -41,5 +44,8 @@
     <delete id="deletePost" parameterType="java.lang.Integer">
         delete from post where id = #{id}
     </delete>
+    <update id="updateTags" parameterType="map">
+        update post set tags = replace(tags, concat(',', #{old}, ','), concat(',', #{new}, ','))
+    </update>
 
 </mapper>

@@ -16,4 +16,6 @@ public interface TagService {
     Integer insertTag(Tag tag);
 
     Integer getTagByName(String name);
+
+    Integer updateTags(String old, String nw);
 }

@@ -19,4 +19,8 @@
         select id from tag where name = #{name}
     </select>
 
+    <update id="updateTag" parameterType="map">
+        update tag set name = #{new} where name = #{old}
+    </update>
+
 </mapper>

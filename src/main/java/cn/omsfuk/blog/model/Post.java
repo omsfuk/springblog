@@ -56,6 +56,12 @@ public class Post {
     }
 
     public void setTags(String tags) {
+        if(!tags.startsWith(",")) {
+            tags = "," + tags;
+        }
+        if(!tags.endsWith(",")) {
+            tags = tags + ",";
+        }
         this.tags = tags;
     }
 
