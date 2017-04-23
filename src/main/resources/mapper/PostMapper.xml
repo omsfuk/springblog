@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.omsfuk.blog.dao.PostDao">
+
+    <resultMap id="post" type="cn.omsfuk.blog.model.Post">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="content" property="content" />
+        <result column="tdate" property="tdate"/>
+        <result column="url" property="url"/>
+    </resultMap>
+    <!--插入博客-->
+    <insert id="insertPost" parameterType="cn.omsfuk.blog.model.Post" keyProperty="id" useGeneratedKeys="true">
+        insert post(title, content, tags, tdate, url) values(#{title}, #{content}, #{tags}, #{tdate}, #{url})
+    </insert>
+    <!--更新博客-->
+    <update id="updatePost" parameterType="cn.omsfuk.blog.model.Post">
+        update post set title = #{title}, content = #{content}, tdate = #{tdate}, url = #{url} where id = #{id}
+    </update>
+    <!--通过url获取博客-->
+    <select id="getPostByUrl" parameterType="java.lang.String" resultType="cn.omsfuk.blog.model.Post">
+        select * from post where url = #{url}
+    </select>
+    <!--通过id获取博客-->
+    <select id="getPostById" parameterType="java.lang.Integer" resultType="cn.omsfuk.blog.model.Post">
+        select * from post where id = #{id}
+    </select>
+    <!--获取所有博客，分页-->
+    <select id="getAllPosts" parameterType="java.lang.Integer" resultMap="post">
+        select * from post limit #{page}, 5
+    </select>
+    <!--通过标签获取博客-->
+    <select id="getPostsByTag" parameterType="java.lang.String" resultMap="post">
+        select * from post where find_in_set(#{tag}, tags)
+    </select>
+    <!--访问次数递增-->
+    <update id="incVtime" parameterType="java.lang.Integer">
+        update post set vtime = vtime + 1 where id = #{id}
+    </update>
+    <!--删除博客-->
+    <delete id="deletePost" parameterType="java.lang.Integer">
+        delete from post where id = #{id}
+    </delete>
+
+</mapper>

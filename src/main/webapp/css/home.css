@@ -1,0 +1,243 @@
+* {
+	padding:0px;
+	margin:0px;
+}
+body {
+	background-color:#d0d0d0;
+}
+
+a {
+	text-decoration: none;
+	color:#555555;
+}
+
+/*渚ц竟鏍�*/
+.navbar {
+	position: fixed;
+	top:0px;
+	left:0px;
+	width:250px;
+	height:100%;
+	background-color:#FFFFFF;
+	box-shadow:0px 0px 5px #D0D0D0;
+}
+/*榛戣儗鏅潡*/
+.navbar .black-bg{
+	position:fixed;
+	left:0px;
+	right:0px;
+	height:200px;
+	width:250px;
+	background-color:#6C6C6C;
+}
+/*澶村儚*/
+.navbar img[class='portrait'] {
+	position:fixed;
+	left:65px;
+	top:150px;
+	width:100px;
+	height:100px;
+	border:10px solid #FFFFFF;
+	border-radius: 50%;
+}
+/*绛惧悕*/
+.navbar img[class='signature'] {
+	position:fixed;
+	top:270px;
+	left:50px;
+}
+/*鎸夐挳*/
+.navbar .btns {
+	position: fixed;
+	top: 330px;
+	left:40px;
+}
+
+.btns .btn-nav {
+	display: inline-block;
+	margin:5px 5px;
+	text-align: center;
+}
+
+.btns .btn-nav:hover {
+	opacity: 0.8;
+}
+
+.navbar .fa {
+	display: block;
+	padding:7px;
+	font-size:30px;
+}
+
+/*鏍囩*/
+.navbar .tags {
+	position: fixed;
+	top:420px;
+	left:0px;
+	width:218px;
+	padding:16px;
+	font-size:12px;
+}
+
+.tags .tag {
+	float:left;
+	margin:2px 2px;
+	padding:2px 5px 2px 10px;
+	background-color: #FFA042;
+	border-top-left-radius: 25% 50%;
+	border-bottom-left-radius: 25% 50%;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.tags .tag:hover {
+	opacity: 0.8;
+	cursor:pointer;
+}
+
+/*姝ｆ枃*/
+.main {
+	margin:16px 32px 64px 300px;
+	max-width:1000px;
+}
+.main .article {
+	background-color: #FFFFFF;
+	margin-bottom:16px;
+}
+
+.article .title {
+	padding:5px 15px;
+	border-left:5px solid #333333;
+	font-size:30px;
+}
+
+.article .content {
+	padding:16px 32px 32px;
+}
+
+.article .footer {
+	padding:16px 15px;
+}
+
+.article .date {
+	float:left;
+}
+.article .tag-list {
+	display: inline-block;
+	overflow: auto;
+	margin-left:32px;
+}
+
+/*姝ｆ枃鏍囩*/
+.tag-list .tag {
+	float:left;
+	margin:1px 2px;
+	padding:1px 5px 1px 10px;
+	background-color: #FFA042;
+	border-top-left-radius: 25% 50%;
+	border-bottom-left-radius: 25% 50%;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	font-size:12px;
+	color:#5B5B5B;
+	font-weight:bold;
+}
+
+.tag-list .tag:hover {
+	cursor:pointer;
+}
+
+.tag-list span {
+	float:left;
+	padding:2px;
+}
+
+/*鏂囩珷鑴氭敞*/
+.footer .btn-more {
+	height:auto;
+	widht:auto;
+	float:right;
+	padding:1px 10px;
+	font-weight:bold;
+	color:#777777;
+	background-color: #D2E9FF;
+	border-radius: 16px 16px;
+	box-shadow: 0px 0px 5px #D2E9FF;
+	border:1px solid #ACD6FF;
+}
+
+.footer a:hover {
+	opacity: 0.8;
+}
+
+/*缈婚〉*/
+.main .page {
+	width:auto;
+	margin:32px auto;
+	text-align: center;	
+	font-size:20px;
+}
+
+.page .fa {
+	padding:10px;
+}
+.page .fa:hover {
+
+}
+.page .text {
+	display: inline;
+	height:32px;
+	line-height: 22px;
+}
+
+.timeline-main {
+	margin:16px 32px 64px 300px;
+	max-width:1000px;
+}
+
+.timeline-main .timeline {
+	padding:32px;
+	background-image: url(../images/line.png);
+	background-repeat:repeat-y;
+}
+.a-piece .date {
+	display: inline-block;
+	width:90px;
+	padding-left:30px;
+	padding-right:16px;
+	padding-bottom:64px;
+}
+.a-piece .title {
+	display: inline-block;
+	margin-left:16px;
+	padding:30px 20px;
+	border:5px solid #FFF8D7;
+	border-radius: 10px;
+	color:#5B5B5B;
+	box-shadow: 0px 0px 10px #FFF8D7;
+}
+
+.a-piece .title:hover {
+	cursor: pointer;
+}
+
+.about {
+	margin:10% 30%;
+	background-color: #E0E0E0;
+	box-shadow: 0px 0px 5px #171717;
+}
+.about .title {
+	font-size:48px;
+	text-align:center;
+	margin:16px 16px;
+}
+.about .text {
+	font-size:36px;
+	text-align:center;
+	padding:8px;
+	color:#555555;
+}
+
+.markdown-body {
+	padding-bottom:32px;
+}

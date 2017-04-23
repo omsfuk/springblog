@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.omsfuk.blog.dao.TagDao">
+
+    <resultMap id="tag" type="cn.omsfuk.blog.model.Tag">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+    </resultMap>
+
+    <insert id="insertTag" parameterType="cn.omsfuk.blog.model.Tag" useGeneratedKeys="true">
+        insert tag(name) values(#{name})
+    </insert>
+
+    <select id="getAllTags" resultMap="tag">
+        select * from tag;
+    </select>
+
+    <select id="getTagByName" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select id from tag where name = #{name}
+    </select>
+
+</mapper>
