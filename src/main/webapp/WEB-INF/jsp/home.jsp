@@ -13,8 +13,9 @@
 <head>
     <meta charset="utf-8">
     <title>Home</title>
-    <link href="/css/home.css" rel="stylesheet" />
+    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/css/home.css" rel="stylesheet" />
 </head>
 <body>
 <div class="navbar">
@@ -47,7 +48,7 @@
                     ${post.title}
             </div>
             <div class="content">
-                    ${post.content}
+                    ${fn:substring(post.content, 0, 500)}
             </div>
             <div class="footer">
                 <div class="date">
@@ -64,8 +65,53 @@
             </div>
         </div>
     </c:forEach>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <c:if test="${page != 0}">
+                <li>
+                    <a href="/home?page=${page - 1}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            </c:if>
+            <c:if test="${page == 0}">
+                <li>
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            </c:if>
+
+            <c:forEach var="i" begin="1" end="${totalPages}" step="1">
+                <c:if test="${i - 1 == page}">
+                    <li class="active"><a href="/home?page=${i-1}">${i}</a></li>
+                </c:if>
+                <c:if test="${i - 1 != page}">
+                    <li><a href="/home?page=${i-1}" >${i}</a></li>
+                </c:if>
+            </c:forEach>
+
+            <c:if test="${page != totalPages - 1}">
+                <li>
+                    <a href="/home?page=${page + 1}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </c:if>
+            <c:if test="${page == totalPages - 1}">
+                <li>
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </c:if>
+
+        </ul>
+    </nav>
 </div>
 </body>
 <script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"/>
 <script src="/js/home.js"></script>
 </html>

@@ -21,6 +21,7 @@
         <li role="presentation" class="active"><a href="/admin/new">New</a></li>
         <li role="presentation"><a href="/admin/posts">Posts</a></li>
         <li role="presentation"><a href="/admin/tags">Tags</a></li>
+        <li role="presentation"><a href="/admin/upload">Upload</a></li>
         <li role="presentation"><a href="/admin/settings">Settings</a></li>
     </ul>
     <div class="jumbotron">
@@ -48,6 +49,7 @@
                 </div>
             </form>
         </div>
+
     </div>
 </div>
 <script src="/js/jquery.min.js"/>

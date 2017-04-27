@@ -22,6 +22,7 @@
         <li role="presentation"><a href="/admin/new">New</a></li>
         <li role="presentation" class="active"><a href="/admin/posts">Posts</a></li>
         <li role="presentation"><a href="/admin/tags">Tags</a></li>
+        <li role="presentation"><a href="/admin/upload">Upload</a></li>
         <li role="presentation"><a href="/admin/settings">Settings</a></li>
     </ul>
     <div class="jumbotron">
@@ -53,8 +54,50 @@
                         </td>
                     </tr>
                 </c:forEach>
-
             </table>
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <c:if test="${page != 0}">
+                        <li>
+                            <a href="/admin/posts?page=${page - 1}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    </c:if>
+                    <c:if test="${page == 0}">
+                        <li>
+                            <a href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    </c:if>
+
+                    <c:forEach var="i" begin="1" end="${totalPages}" step="1">
+                        <c:if test="${i - 1 == page}">
+                            <li class="active"><a href="/home?page=${i-1}">${i}</a></li>
+                        </c:if>
+                        <c:if test="${i - 1 != page}">
+                            <li><a href="/admin/posts?page=${i-1}" >${i}</a></li>
+                        </c:if>
+                    </c:forEach>
+
+                    <c:if test="${page != totalPages - 1}">
+                        <li>
+                            <a href="/admin/posts?page=${page + 1}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </c:if>
+                    <c:if test="${page == totalPages - 1}">
+                        <li>
+                            <a href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </c:if>
+
+                </ul>
+            </nav>
         </div>
     </div>
 </div>

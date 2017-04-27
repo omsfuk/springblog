@@ -17,10 +17,10 @@
 <div class="container">
     <div class="jumbotron">
         <div class="container">
-            <form>
+            <form action="/userlogin">
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input name="username" type="email" class="form-control" id="username" placeholder="Username">
+                    <input name="username" type="text" class="form-control" id="username" placeholder="Username">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>

@@ -15,7 +15,7 @@
     </insert>
     <!--更新博客-->
     <update id="updatePost" parameterType="cn.omsfuk.blog.model.Post">
-        update post set title = #{title}, content = #{content}, tdate = #{tdate}, url = #{url} where id = #{id}
+        update post set title = #{title}, content = #{content}, tdate = #{tdate}, url = #{url} , tags = #{tags} where id = #{id}
     </update>
     <!--通过url获取博客-->
     <select id="getPostByUrl" parameterType="java.lang.String" resultType="cn.omsfuk.blog.model.Post">
@@ -33,8 +33,15 @@
     <select id="getPostsByTag" parameterType="java.lang.String" resultMap="post">
         select * from post where find_in_set(#{tag}, tags)
     </select>
+    <!--获得文章总数-->
     <select id="getPostsCount" resultType="java.lang.Integer">
         select count(*) from post;
+    </select>
+    <select id="getNextPost" parameterType="java.lang.Integer" resultType="cn.omsfuk.blog.model.Post">
+        select id, title, url from post where id = (select min(id) from post where id > #{id})
+    </select>
+    <select id="getPreviousPost" parameterType="java.lang.Integer" resultType="cn.omsfuk.blog.model.Post">
+        select id, title, url from post where id = (select max(id) from post where id &lt; #{id})
     </select>
     <!--访问次数递增-->
     <update id="incVtime" parameterType="java.lang.Integer">

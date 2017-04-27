@@ -13,16 +13,16 @@
 <head>
     <meta charset="utf-8">
     <title>${post.title}</title>
-    <link href="/css/home.css" rel="stylesheet" />
-    <link href="/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="/css/github-markdown.css" rel="stylesheet" />
+    <link href="/css/home.css" rel="stylesheet"/>
+    <link href="/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="/css/github-markdown.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="navbar">
     <div class="black-bg">
     </div>
-    <img class="portrait" src="/images/portrait.png" />
-    <img class="signature" src="/images/signature.png" />
+    <img class="portrait" src="/images/portrait.png"/>
+    <img class="signature" src="/images/signature.png"/>
     <div class="btns">
         <div class="btn-nav">
             <a class="fa fa-paw" href="/home"></a>主页
@@ -58,14 +58,39 @@
             </div>
             <span>&nbsp;&nbsp;${post.vtime} 次访问</span>
         </div>
-        <div class="content markdown-body">
-            ${post.content}
-        </div>
+        <div class="content markdown-body"></div>
     </div>
+
+    <c:if test="${empty previousPost}">
+        <a style="float:left" href="#">上一篇： 没有了</a>
+    </c:if>
+    <c:if test="${!empty previousPost}">
+        <a style="float:left" href="/post/${previousPost.url}">上一篇： ${previousPost.title}</a>
+    </c:if>
+
+    <c:if test="${empty nextPost}">
+        <a style="float:right" href="#">下一篇： 没有了</a>
+    </c:if>
+    <c:if test="${!empty nextPost}">
+        <a style="float:right" href="/post/${nextPost.url}">下一篇： ${nextPost.title}</a>
+    </c:if>
 
 </div>
 </body>
 <script src="/js/jquery.min.js"></script>
 <script src="/js/showdown.min.js"></script>
 <script src="/js/home.js"></script>
+<script>
+    $(document).ready(function () {
+        $.get("/getPost/${url}", function(data, status) {
+            if(data.success == true) {
+                var converter = new showdown.Converter();
+                var html = converter.makeHtml(data.data.content);
+                $("div[class='content markdown-body']").html(html);
+            } else {
+                alert(data.msg);
+            }
+        });
+    });
+</script>
 </html>

@@ -14,24 +14,28 @@ import java.util.Map;
  */
 public interface PostDao {
 
-    public Integer getPostsCount();
+    Integer getPostsCount();
 
-    public List<Post> getAllPosts(Integer page);
+    List<Post> getAllPosts(Integer page);
 
-    public Post getPostById(Integer id);
+    Post getPostById(Integer id);
 
-    public Post getPostByUrl(String url);
+    Post getPostByUrl(String url);
 
-    public List<Post> getPostsByTag(String tag);
+    List<Post> getPostsByTag(String tag);
 
-    public Integer insertPost(Post post);
+    Integer insertPost(Post post);
 
-    public Integer updatePost(Post post);
+    Integer updatePost(Post post);
 
-    public Integer deletePost(Integer id);
+    Integer deletePost(Integer id);
 
-    public int incVtime(Integer id);
+    int incVtime(Integer id);
 
-    public Integer updateTags(Map<String, String> map);
+    Integer updateTags(Map<String, String> map);
+
+    Post getNextPost(Integer id);
+
+    Post getPreviousPost(Integer id);
 
 }

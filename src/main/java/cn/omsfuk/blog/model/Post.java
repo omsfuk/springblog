@@ -15,7 +15,6 @@ public class Post {
     @Size(max = 50)
     private String title;
 
-    @Size(max = 5000)
     private String content;
 
     private String tags;

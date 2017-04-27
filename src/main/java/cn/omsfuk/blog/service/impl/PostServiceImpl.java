@@ -74,7 +74,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> getAllPosts(int page) {
-        return postDao.getAllPosts(page * 10);
+        return postDao.getAllPosts(page * 5);
     }
 
     @Override
@@ -98,6 +98,16 @@ public class PostServiceImpl implements PostService {
         }
         post.setTdate(new Date(System.currentTimeMillis()));
         return postDao.updatePost(post);
+    }
+
+    @Override
+    public Post getNextPost(Integer id) {
+        return postDao.getNextPost(id);
+    }
+
+    @Override
+    public Post getPreviousPost(Integer id) {
+        return postDao.getPreviousPost(id);
     }
 
     @Override

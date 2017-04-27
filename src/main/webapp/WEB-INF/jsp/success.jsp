@@ -11,6 +11,7 @@
     <title>Success</title>
 </head>
 <body>
-    成功
+    <h1>成功</h1>
+    <span>${info}</span>
 </body>
 </html>

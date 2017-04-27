@@ -16,5 +16,10 @@ create table post (
 
 create table tag (
   id int AUTO_INCREMENT PRIMARY KEY,
-  name varchar(20)
+  name varchar(20) unique
 );
+
+create table picture (
+  id int AUTO_INCREMENT PRIMARY KEY,
+  name varchar(40) unique;
+)

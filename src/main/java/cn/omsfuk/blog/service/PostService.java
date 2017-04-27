@@ -11,22 +11,26 @@ import java.util.List;
  */
 public interface PostService {
 
-    public Post getPostById(Integer id);
+    Post getPostById(Integer id);
 
-    public int insertPost(Post post);
+    int insertPost(Post post);
 
-    public int deletePost(Integer id);
+    int deletePost(Integer id);
 
-    public boolean isPostExist(Integer id);
+    boolean isPostExist(Integer id);
 
-    public Post getPostByUrl(String url);
+    Post getPostByUrl(String url);
 
-    public List<Post> getAllPosts(int page);
+    List<Post> getAllPosts(int page);
 
-    public List<Post> getPostsByTag(String tag);
+    List<Post> getPostsByTag(String tag);
 
-    public int getPostsCount();
+    int getPostsCount();
 
-    public int updatePost(Post post);
+    int updatePost(Post post);
+
+    Post getNextPost(Integer id);
+
+    Post getPreviousPost(Integer id);
 
 }
