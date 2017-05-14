@@ -1,21 +1,55 @@
 package cn.omsfuk.blog.service;
 
-import cn.omsfuk.blog.model.Tag;
+import cn.omsfuk.blog.dao.NoteDao;
+import cn.omsfuk.blog.dao.TagDao;
+import cn.omsfuk.blog.domain.Tag;
+import cn.omsfuk.blog.domain.User;
+import cn.omsfuk.blog.service.TagService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by omsfuk on 17-4-23.
  */
 
-public interface TagService {
+@Service
+public class TagService {
 
-    List<Tag> getAllTags();
+    @Autowired
+    private TagDao tagDao;
 
-    Integer insertTag(Tag tag);
+    @Autowired
+    private NoteDao noteDao;
 
-    Integer getTagByName(String name);
+    
+    public List<Tag> getAllTags(User user) {
+        return tagDao.getAllTags(user.getId());
+    }
 
-    Integer updateTags(String old, String nw);
+    
+    public Integer insertTag(Tag tag) {
+        return tagDao.insertTag(tag);
+    }
+
+    
+    public Integer getTagByName(String name, User user) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("userid", user.getId());
+        map.put("name", name);
+        return tagDao.getTagByName(map);
+    }
+
+    
+    public Integer updateTags(String old, String nw) {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("old", old);
+        map.put("new", nw);
+        tagDao.updateTag(map);
+        return noteDao.updateTags(map);
+    }
+
 }

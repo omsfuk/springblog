@@ -1,4 +1,4 @@
-package cn.omsfuk.blog.model;
+package cn.omsfuk.blog.domain;
 
 /**
  * Created by omsfuk on 17-4-23.
@@ -8,6 +8,8 @@ public class Tag {
     private Integer id;
 
     private String name;
+
+    private Integer  userid;
 
     public Integer getId() {
         return id;
@@ -31,5 +33,13 @@ public class Tag {
 
     public Tag(String name) {
         this.name = name;
+    }
+
+    public Integer getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Integer userid) {
+        this.userid = userid;
     }
 }

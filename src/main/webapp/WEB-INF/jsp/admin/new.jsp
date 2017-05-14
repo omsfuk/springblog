@@ -19,14 +19,14 @@
     <ul class="nav nav-tabs">
         <li role="presentation"><a href="/admin/index">Index</a></li>
         <li role="presentation" class="active"><a href="/admin/new">New</a></li>
-        <li role="presentation"><a href="/admin/posts">Posts</a></li>
+        <li role="presentation"><a href="/admin/notes">Posts</a></li>
         <li role="presentation"><a href="/admin/tags">Tags</a></li>
         <li role="presentation"><a href="/admin/upload">Upload</a></li>
         <li role="presentation"><a href="/admin/settings">Settings</a></li>
     </ul>
     <div class="jumbotron">
         <div class="container">
-            <form action="/admin/post/add" method="post">
+            <form action="/admin/note/add" method="note">
                 <div class="form-group input-group">
                     <span class="input-group-addon" id="basic-addon1">Title</span>
                     <input name="title" type="text" class="form-control" placeholder="title" aria-describedby="basic-addon1">

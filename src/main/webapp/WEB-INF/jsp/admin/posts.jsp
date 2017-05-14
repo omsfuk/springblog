@@ -20,7 +20,7 @@
     <ul class="nav nav-tabs">
         <li role="presentation"><a href="/admin/index">Index</a></li>
         <li role="presentation"><a href="/admin/new">New</a></li>
-        <li role="presentation" class="active"><a href="/admin/posts">Posts</a></li>
+        <li role="presentation" class="active"><a href="/admin/notes">Posts</a></li>
         <li role="presentation"><a href="/admin/tags">Tags</a></li>
         <li role="presentation"><a href="/admin/upload">Upload</a></li>
         <li role="presentation"><a href="/admin/settings">Settings</a></li>
@@ -36,19 +36,19 @@
                     <th>operate</th>
                 </tr>
 
-                <c:forEach var="post" items="${posts}">
+                <c:forEach var="note" items="${notes}">
                     <tr>
-                        <td>${post.id}</td>
-                        <td>${post.title}</td>
-                        <td>${post.tags}</td>
-                        <td>${post.url}</td>
+                        <td>${note.id}</td>
+                        <td>${note.title}</td>
+                        <td>${note.tags}</td>
+                        <td>${note.url}</td>
                         <td>
-                            <form action="/admin/post/edit" method="get" style="display:inline-block;">
-                                <input type="hidden" name="id" value="${post.id}"/>
+                            <form action="/admin/note/edit" method="get" style="display:inline-block;">
+                                <input type="hidden" name="id" value="${note.id}"/>
                                 <button type="submit" class="btn btn-primary btn-sm">编辑</button>
                             </form>
-                            <form action="/admin/post/del" method="post" style="display:inline-block;">
-                                <input type="hidden" name="id" value="${post.id}"/>
+                            <form action="/admin/note/del" method="note" style="display:inline-block;">
+                                <input type="hidden" name="id" value="${note.id}"/>
                                 <button type="submit" class="btn btn-danger btn-sm">删除</button>
                             </form>
                         </td>
@@ -59,7 +59,7 @@
                 <ul class="pagination">
                     <c:if test="${page != 0}">
                         <li>
-                            <a href="/admin/posts?page=${page - 1}" aria-label="Previous">
+                            <a href="/admin/notes?page=${page - 1}" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
@@ -77,13 +77,13 @@
                             <li class="active"><a href="/home?page=${i-1}">${i}</a></li>
                         </c:if>
                         <c:if test="${i - 1 != page}">
-                            <li><a href="/admin/posts?page=${i-1}" >${i}</a></li>
+                            <li><a href="/admin/notes?page=${i-1}" >${i}</a></li>
                         </c:if>
                     </c:forEach>
 
                     <c:if test="${page != totalPages - 1}">
                         <li>
-                            <a href="/admin/posts?page=${page + 1}" aria-label="Next">
+                            <a href="/admin/notes?page=${page + 1}" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>

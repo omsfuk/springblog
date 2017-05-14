@@ -5,7 +5,7 @@ package cn.omsfuk.blog.dto;
  */
 public class Result {
 
-    private boolean success;
+    private boolean success = false;
 
     public Object data;
 

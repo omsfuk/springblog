@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.omsfuk.blog.dao.UserDao">
+
+    <insert id="insertUser" parameterType="cn.omsfuk.blog.domain.User">
+        insert into username(name, password, email, roleid) values(#{name}, #{password}, #{email}, select id from role where name = #{role})
+    </insert>
+
+    <select id="getUserByName" parameterType="java.lang.String" resultType="cn.omsfuk.blog.domain.User">
+        select username.id as id, username.name as name, username.password as password, username.email as email, role.name as role from username, role where username.name = #{name} and role.id = username.roleid
+    </select>
+
+    <select id="getUserNameById" parameterType="int" resultType="java.lang.String">
+        select name from username where id = #{id}
+    </select>
+
+</mapper>

@@ -19,8 +19,8 @@
         <div class="container">
             <form action="/userlogin">
                 <div class="form-group">
-                    <label for="username">Username</label>
-                    <input name="username" type="text" class="form-control" id="username" placeholder="Username">
+                    <label for="name">Username</label>
+                    <input name="name" type="text" class="form-control" id="name" placeholder="Username">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>

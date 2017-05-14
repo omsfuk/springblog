@@ -1,4 +1,4 @@
-package cn.omsfuk.blog.model;
+package cn.omsfuk.blog.domain;
 
 import java.sql.Date;
 

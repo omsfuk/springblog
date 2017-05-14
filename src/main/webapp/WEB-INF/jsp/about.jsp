@@ -29,7 +29,7 @@
             <a class="fa fa-paper-plane" href="/archive"></a>归档
         </div>
         <div class="btn-nav">
-            <a class="fa fa-user-circle" href="/about"></a>关于
+            <a class="fa fa-username-circle" href="/about"></a>关于
         </div>
     </div>
     <div class="tags">

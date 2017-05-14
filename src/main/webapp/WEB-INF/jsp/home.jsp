@@ -13,11 +13,12 @@
 <head>
     <meta charset="utf-8">
     <title>Home</title>
+    <script src="/js/angular.min.js"></script>
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="/css/font-awesome.min.css" rel="stylesheet" />
     <link href="/css/home.css" rel="stylesheet" />
 </head>
-<body>
+<body ng-app="HomeApp" ng-controller="HomeController">
 <div class="navbar">
     <div class="black-bg">
     </div>
@@ -31,7 +32,7 @@
             <a class="fa fa-paper-plane" href="/archive"></a>归档
         </div>
         <div class="btn-nav">
-            <a class="fa fa-user-circle" href="/about"></a>关于
+            <a class="fa fa-username-circle" href="/about"></a>关于
         </div>
     </div>
     <div class="tags">
@@ -42,30 +43,27 @@
 </div>
 
 <div class="main">
-    <c:forEach var="post" items="${posts}">
-        <div class="article">
-            <div class="title">
-                    ${post.title}
-            </div>
-            <div class="content">
-                    ${fn:substring(post.content, 0, 500)}
-            </div>
-            <div class="footer">
-                <div class="date">
-                    <span class="fa fa-clock-o"> ${post.tdate}</span>
-                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${post.vtime} 次访问</span>
-                </div>
-                <div class="tag-list">
-                    <span class="fa fa-tags fa-lg"></span>
-                    <c:forEach var="tag" items="${fn:split(post.tags,',')}">
-                        <a href="/tag/${tag}" class="tag"><span class="tag-text">${tag}</span></a>
-                    </c:forEach>
-                </div>
-                <a class="btn-more" href="/post/${post.url}">More...</a>
-            </div>
+    <div class="article" ng-repeat="note in notes">
+        <div class="title">
+            {{note.title}}
         </div>
-    </c:forEach>
-
+        <div class="content">
+           {{note.content}}
+        </div>
+        <div class="footer">
+            <div class="date">
+                <span class="fa fa-clock-o"> {{note.tdate}}</span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{note.vtime}} 次访问</span>
+            </div>
+            <div class="tag-list">
+                <span class="fa fa-tags fa-lg"></span>
+                <%--<c:forEach var="tag" items="${fn:split(note.tags,',')}">--%>
+                    <%--<a href="/tag/${tag}" class="tag"><span class="tag-text">${tag}</span></a>--%>
+                <%--</c:forEach>--%>
+            </div>
+            <a class="btn-more" href="/note/{{note.url}}">More...</a>
+        </div>
+    </div>
     <nav aria-label="Page navigation">
         <ul class="pagination">
             <c:if test="${page != 0}">
@@ -114,4 +112,17 @@
 <script src="/js/jquery.min.js"></script>
 <script src="/js/bootstrap.min.js"/>
 <script src="/js/home.js"></script>
+<script>
+    var app = angular.module('HomeApp', [])
+    app.controller('HomeController', function($scope, $http) {
+        $http({
+            method: 'GET',
+            url: 'api/note/all'
+        }).success(function(data, status, headers, config) {
+            $scope.notes = data;
+        }).error(function(data, status, headers, config) {
+
+        })
+    })
+</script>
 </html>

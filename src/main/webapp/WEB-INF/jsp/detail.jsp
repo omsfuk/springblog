@@ -12,7 +12,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>${post.title}</title>
+    <title>${note.title}</title>
     <link href="/css/home.css" rel="stylesheet"/>
     <link href="/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="/css/github-markdown.css" rel="stylesheet"/>
@@ -31,7 +31,7 @@
             <a class="fa fa-paper-plane" href="/archive"></a>归档
         </div>
         <div class="btn-nav">
-            <a class="fa fa-user-circle" href="/about"></a>关于
+            <a class="fa fa-username-circle" href="/about"></a>关于
         </div>
     </div>
     <div class="tags">
@@ -44,35 +44,35 @@
 <div class="main">
     <div class="article">
         <div class="title">
-            ${post.title}
+            ${note.title}
         </div>
         <div class="footer">
             <div class="date">
-                <span class="fa fa-clock-o"> ${post.tdate}</span>
+                <span class="fa fa-clock-o"> ${note.tdate}</span>
             </div>
             <div class="tag-list">
                 <span class="fa fa-tags fa-lg"></span>
-                <c:forEach var="tag" items="${fn:split(post.tags, ',')}">
+                <c:forEach var="tag" items="${fn:split(note.tags, ',')}">
                     <a href="/tag/${tag}" class="tag"><span class="tag-text">${tag}</span></a>
                 </c:forEach>
             </div>
-            <span>&nbsp;&nbsp;${post.vtime} 次访问</span>
+            <span>&nbsp;&nbsp;${note.vtime} 次访问</span>
         </div>
         <div class="content markdown-body"></div>
     </div>
 
-    <c:if test="${empty previousPost}">
+    <c:if test="${empty previousNote}">
         <a style="float:left" href="#">上一篇： 没有了</a>
     </c:if>
-    <c:if test="${!empty previousPost}">
-        <a style="float:left" href="/post/${previousPost.url}">上一篇： ${previousPost.title}</a>
+    <c:if test="${!empty previousNote}">
+        <a style="float:left" href="/note/${previousNote.url}">上一篇： ${previousNote.title}</a>
     </c:if>
 
-    <c:if test="${empty nextPost}">
+    <c:if test="${empty nextNote}">
         <a style="float:right" href="#">下一篇： 没有了</a>
     </c:if>
-    <c:if test="${!empty nextPost}">
-        <a style="float:right" href="/post/${nextPost.url}">下一篇： ${nextPost.title}</a>
+    <c:if test="${!empty nextNote}">
+        <a style="float:right" href="/note/${nextNote.url}">下一篇： ${nextNote.title}</a>
     </c:if>
 
 </div>

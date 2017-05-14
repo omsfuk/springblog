@@ -2,21 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.omsfuk.blog.dao.TagDao">
 
-    <resultMap id="tag" type="cn.omsfuk.blog.model.Tag">
+    <resultMap id="tag" type="cn.omsfuk.blog.domain.Tag">
         <id column="id" property="id" />
         <result column="name" property="name" />
     </resultMap>
 
-    <insert id="insertTag" parameterType="cn.omsfuk.blog.model.Tag" useGeneratedKeys="true">
-        insert tag(name) values(#{name})
+    <insert id="insertTag" parameterType="cn.omsfuk.blog.domain.Tag" useGeneratedKeys="true" keyProperty="id">
+        insert tag(userid, name) values(#{userid}, #{name})
     </insert>
 
-    <select id="getAllTags" resultMap="tag">
-        select * from tag;
+    <select id="getAllTags" parameterType="java.lang.Integer" resultMap="tag">
+        select * from tag where userid = #{userid};
     </select>
 
-    <select id="getTagByName" parameterType="java.lang.String" resultType="java.lang.Integer">
-        select id from tag where name = #{name}
+    <select id="getTagByName" parameterType="map" resultType="java.lang.Integer">
+        select id from tag where name = #{name} and userid = #{userid}
     </select>
 
     <update id="updateTag" parameterType="map">

@@ -30,7 +30,7 @@
             <a class="fa fa-paper-plane" href="/archive"></a>归档
         </div>
         <div class="btn-nav">
-            <a class="fa fa-user-circle" href="/about"></a>关于
+            <a class="fa fa-username-circle" href="/about"></a>关于
         </div>
     </div>
     <div class="tags">
@@ -42,14 +42,14 @@
 
 <div class="timeline-main">
     <div class="timeline">
-        <c:forEach var="post" items="${posts}">
+        <c:forEach var="note" items="${notes}">
             <div class="a-piece">
-                <div class="date">${post.tdate}</div>
+                <div class="date">${note.tdate}</div>
                 <span class="fa-stack fa-2x">
 						  <i class="fa fa-circle fa-stack-2x" style="color:#D2E9FF"></i>
 						  <i class="fa fa-check fa-stack-1x" style="color:#7D7DFF"></i>
 						</span>
-                <a href="/post/${post.url}"><div class="title">${post.title}</div></a>
+                <a href="/note/${note.url}"><div class="title">${note.title}</div></a>
             </div>
         </c:forEach>
     </div>

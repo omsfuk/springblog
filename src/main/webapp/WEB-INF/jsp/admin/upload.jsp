@@ -20,14 +20,14 @@
     <ul class="nav nav-tabs">
         <li role="presentation"><a href="/admin/index">Index</a></li>
         <li role="presentation"><a href="/admin/new">New</a></li>
-        <li role="presentation"><a href="/admin/posts">Posts</a></li>
+        <li role="presentation"><a href="/admin/notes">Posts</a></li>
         <li role="presentation"><a href="/admin/tags">Tags</a></li>
         <li role="presentation" class="active"><a href="/admin/upload">Upload</a></li>
         <li role="presentation"><a href="/admin/settings">Settings</a></li>
     </ul>
     <div class="jumbotron">
         <div class="container">
-            <form action="/admin/fileUpload" method="post" enctype="multipart/form-data" >
+            <form action="/admin/fileUpload" method="note" enctype="multipart/form-data" >
                 <div class="form-group">
                     <input name="file" type="file" id="InputFile">
                     <p class="help-block">可以将用到的图片上传</p>
@@ -44,7 +44,7 @@
                             <img src="/upload/${picture.fileName}"
                                  alt="图片略缩图">
                         </a>
-                        <form action="/admin/delResource" method="post">
+                        <form action="/admin/delResource" method="note">
                             <input name="name" type="hidden" value="${picture.fileName}"/>
                             <button type="submit" class="btn btn-danger">删除</button>
                         </form>
