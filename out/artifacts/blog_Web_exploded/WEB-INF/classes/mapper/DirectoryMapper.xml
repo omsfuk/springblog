@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.omsfuk.blog.dao.DirectoryDao">
+
+    <resultMap id="directory" type="cn.omsfuk.blog.domain.Directory">
+        <id column="id" property="id"/>
+        <result column="userid" property="userid"/>
+        <result column="path" property="path"/>
+    </resultMap>
+
+    <insert id="insertDirectory" parameterType="cn.omsfuk.blog.domain.Directory" useGeneratedKeys="true" keyProperty="id">
+        insert directory(path, userid) values(#{path}, #{userid})
+    </insert>
+    
+    <delete id="deleteDirectory" parameterType="map">
+        delete from note where userid = #{userid} and directoryid in
+        (select id from directory where path like concat((select path from directory where id = #{id}), '%'));
+        delete from directory where userid = #{userid} and path like
+        concat((select path from (select * from directory)t where id = #{id}), '%');
+    </delete>
+
+    <select id="getDirectoryById" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select path from directory where id = #{directoryid}
+    </select>
+
+    <select id="getAllDirectory" parameterType="java.lang.Integer" resultMap="directory">
+        select * from directory where userid = #{userid} order by path
+    </select>
+
+    <select id="getDirectoryByPath" parameterType="map" resultMap="directory">
+        select * from directory where path = #{path}
+    </select>
+
+    <update id="updateDirectory" parameterType="map">
+        update directory set path = #{new} where path = #{old}
+    </update>
+
+</mapper>

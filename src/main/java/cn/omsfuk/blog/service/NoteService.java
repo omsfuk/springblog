@@ -1,25 +1,29 @@
 package cn.omsfuk.blog.service;
 
+import cn.omsfuk.blog.base.Result;
+import cn.omsfuk.blog.base.ResultCache;
 import cn.omsfuk.blog.dao.DirectoryDao;
 import cn.omsfuk.blog.dao.NoteDao;
 import cn.omsfuk.blog.dao.TagDao;
 import cn.omsfuk.blog.domain.*;
 import cn.omsfuk.blog.error.exception.NotFoundException;
-import cn.omsfuk.blog.service.NoteFormatIOService;
-import cn.omsfuk.blog.service.NoteService;
+import cn.omsfuk.blog.vo.NotesVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.FileInputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Date;
-import java.sql.ResultSet;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * Created by omsfuk on 17-4-16.
@@ -60,7 +64,6 @@ public class NoteService {
                     if(tagDao.getTagByName(map) == null) {
                         Tag tagDo = new Tag();
                         tagDo.setUserid(user.getId());
-                        System.out.println("------------------------------------------------ " + tag);
                         tagDo.setName(tag);
                         tagDao.insertTag(tagDo);
                     }
@@ -87,8 +90,8 @@ public class NoteService {
         return true;
     }
 
-    public List<NoteArchive> getNoteArchive(User user) {
-        return noteDao.getNoteArchiveByDate(user.getId());
+    public Result getNoteArchive(User user) {
+        return ResultCache.getOK(noteDao.getNoteArchiveByDate(user.getId()));
     }
 
     
@@ -109,13 +112,52 @@ public class NoteService {
 
         ensureTagExist(note, user);
 
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("userid", user.getId());
         map.put("path", note.getDirectory());
         Directory directory = directoryDao.getDirectoryByPath(map);
         note.setDirectoryid(directory.getId());
 
         return noteDao.updateNote(note);
+    }
+
+    public void download(String path, HttpServletResponse response, User user) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("userid", user.getId());
+        map.put("limit", -1);
+        List<Note> notes = noteDao.getAllNote(map);
+        ZipOutputStream outputStream = null;
+        try {
+            outputStream = new ZipOutputStream(response.getOutputStream());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        final ZipOutputStream finalZipStream = outputStream;
+        notes.stream()
+                .filter(note -> note.getDirectory().startsWith(path))
+                .forEach(note -> {
+                    try {
+                        String entryName = note.getDirectory() + note.getTitle() + ".md";
+                        System.out.println(entryName);
+                        System.out.println(note.getContent().length());
+                        finalZipStream.putNextEntry(new ZipEntry((entryName.substring(1, entryName.length()))));
+                        byte[] utf8Space = new byte[] { (byte) 194, (byte)160 };
+                        String space = new String(utf8Space, "UTF-8");
+                        finalZipStream.write(note.getContent().replace(space, " ").getBytes("UTF-8"));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+        try {
+            outputStream.flush();
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     
@@ -175,7 +217,7 @@ public class NoteService {
     }
 
     
-    public List<Note> getNote(String tag, String url, Integer id, Integer page, User user) {
+    public Result getNote(String tag, String url, Integer id, Integer page, Integer rows, User user) {
         List<Note> notes = null;
         Map<String, Object> map = new HashMap<String, Object>();
         if(tag == null) {
@@ -191,10 +233,14 @@ public class NoteService {
         } else {
             map.put("id", id);
         }
+        if(rows == null) {
+            rows = 5;
+        }
+        map.put("rows", 5);
         if(page == null) {
             page = 0;
         }
-        map.put("page", page * 5);
+        map.put("page", page * rows);
 
         map.put("userid", user.getId());
 
@@ -202,12 +248,16 @@ public class NoteService {
         notes = noteDao.getNote(map);
 
         if((!"%".equals(url)) || id != null) {
-            System.out.println("-----------------------" + id);
+            Map<String, Object> map0 = new HashMap<>();
+            map0.put("userid", user.getId());
+            map0.put("id", notes.get(0).getId());
+            notes.get(0).setNextNote(noteDao.getNextNote(map0));
+            notes.get(0).setPreviousNote(noteDao.getPreviousNote(map0));
             noteDao.incViews(notes.get(0).getId());
             notes.get(0).setViews(notes.get(0).getViews() + 1);
         }
 
-        return notes;
+        return ResultCache.getOK(new NotesVO(noteDao.getNoteCount(user.getId()), notes));
     }
 
     
@@ -218,7 +268,6 @@ public class NoteService {
         Note note = noteDao.getNoteByUrl(map);
         noteDao.incViews(note.getId());
         note.setViews(note.getViews() + 1);
-        System.out.println("------------------");
         return note;
     }
 
@@ -241,15 +290,6 @@ public class NoteService {
     
     public Note getNoteById(Integer id, User user) {
         return noteDao.getNoteById(id);
-    }
-
-    
-    public Note getNextNote(Integer id, Integer userid) {
-        return noteDao.getNextNote(id);
-    }
-    
-    public Note getPreviousNote(Integer id, Integer userid) {
-        return noteDao.getPreviousNote(id);
     }
 
 }

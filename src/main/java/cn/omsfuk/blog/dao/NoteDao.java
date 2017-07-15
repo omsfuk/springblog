@@ -27,9 +27,9 @@ public interface NoteDao {
 
     Note getNoteByUrl(Map<String, Object> map);
 
-    Note getNextNote(Integer id);
+    Note getNextNote(Map<String, Object> map);
 
-    Note getPreviousNote(Integer id);
+    Note getPreviousNote(Map<String, Object> map);
 
     List<Note> getAllNote(Map<String, Object> map);
 

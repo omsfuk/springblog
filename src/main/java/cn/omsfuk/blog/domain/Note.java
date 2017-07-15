@@ -43,6 +43,10 @@ public class Note {
     @Size(max = 65535)
     private String content;
 
+    private Note nextNote;
+
+    private Note previousNote;
+
     public String getTags() {
         return tags;
     }

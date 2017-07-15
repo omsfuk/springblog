@@ -2,6 +2,8 @@ package cn.omsfuk.blog.domain;
 
 
 import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -12,8 +14,10 @@ import javax.validation.constraints.Size;
  */
 
 @Data
+@RequiredArgsConstructor
 public class User {
 
+    @NonNull
     private Integer id;
 
     @NotNull
@@ -29,5 +33,9 @@ public class User {
     private String email;
 
     private String role;
+
+    public User() {
+
+    }
 
 }

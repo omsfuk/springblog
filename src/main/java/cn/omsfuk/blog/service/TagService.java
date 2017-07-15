@@ -1,10 +1,13 @@
 package cn.omsfuk.blog.service;
 
+import cn.omsfuk.blog.base.Result;
+import cn.omsfuk.blog.base.ResultCache;
 import cn.omsfuk.blog.dao.NoteDao;
 import cn.omsfuk.blog.dao.TagDao;
 import cn.omsfuk.blog.domain.Tag;
 import cn.omsfuk.blog.domain.User;
 import cn.omsfuk.blog.service.TagService;
+import cn.omsfuk.blog.vo.TagsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +29,8 @@ public class TagService {
     private NoteDao noteDao;
 
     
-    public List<Tag> getAllTags(User user) {
-        return tagDao.getAllTags(user.getId());
+    public Result getAllTags(Integer userid) {
+        return ResultCache.getOK(new TagsVO(tagDao.getAllTags(userid)));
     }
 
     

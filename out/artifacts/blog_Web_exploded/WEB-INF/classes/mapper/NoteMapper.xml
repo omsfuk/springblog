@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.omsfuk.blog.dao.NoteDao">
+
+    <resultMap id="NoteArchive" type="cn.omsfuk.blog.domain.NoteArchive">
+        <result column="last_modify" property="date" />
+        <collection property="notes" column="last_modify" select = "cn.omsfuk.blog.dao.NoteDao.getNoteByDate"/>
+    </resultMap>
+
+    <resultMap id="note" type="cn.omsfuk.blog.domain.Note">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="ucserid" property="userid"/>
+        <result column="tags" property="tags" />
+        <result column="last_Modify" property="lastModify"/>
+        <result column="url" property="url"/>
+        <result column="views" property="views"/>
+        <result column="directoryid" property="directoryid"/>
+        <result column="content" property="content" />
+        <association property="username" column="userid" select="cn.omsfuk.blog.dao.UserDao.getUserNameById"/>
+        <association property="directory" column="directoryid" select = "cn.omsfuk.blog.dao.DirectoryDao.getDirectoryById"/>
+    </resultMap>
+    <!--插入博客-->
+    <insert id="insertNote" parameterType="cn.omsfuk.blog.domain.Note" keyProperty="id" useGeneratedKeys="true">
+        insert note(title, userid, directoryid, tags, last_modify, url, content)
+            values(#{title}, #{userid}, #{directoryid}, #{tags}, CURRENT_DATE(), #{url}, #{content})
+    </insert>
+    <!--更新博客-->
+    <update id="updateNote" parameterType="cn.omsfuk.blog.domain.Note">
+        update note set title = #{title}, userid = #{userid}, directoryid = #{directoryid}, last_modify = CURRENT_DATE(), url = #{url} , tags = #{tags}, content = #{content} where id = #{id}
+    </update>
+    <!--通过url获取博客-->
+    <select id="getNoteByUrl" parameterType="map" resultMap="note">
+        select * from note where url = #{url}
+    </select>
+    <!--通过id获取博客-->
+    <select id="getNoteById" parameterType="java.lang.Integer" resultMap="note">
+        select * from note where id = #{id}
+    </select>
+    <!--获取所有博客，分页-->
+    <select id="getAllNote" parameterType="map" resultMap="note">
+        select * from note where userid = #{userid} limit #{page}, 5
+    </select>
+    <!--通过标签获取博客-->
+    <select id="getNoteByTag" parameterType="map" resultMap="note">
+        select * from note where find_in_set(#{tags}, tags) and userid = #{userid}
+    </select>
+
+    <select id="getNoteByDate" parameterType="date" resultMap="note">
+        select * from note where last_modify = #{last_modify}
+    </select>
+    <!--按照时间归档-->
+    <select id="getNoteArchiveByDate" parameterType="java.lang.Integer" resultMap="NoteArchive">
+        select DISTINCT(last_modify) from note where userid = #{userid}
+    </select>
+    <select id="getNoteByDirectoryId" parameterType="map" resultMap="note">
+        select * from note where userid = #{userid} and directoryid = #{directoryid} order by last_modify desc
+    </select>
+    <!--获得文章总数-->
+    <select id="getNoteCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select count(*) from note where userid = #{userid};
+    </select>
+    <select id="getNote" parameterType="map" resultMap="note">
+        select * from note where id like #{id} and find_in_set(#{tag}, tags) and url like #{url} and userid = #{userid} limit #{page}, #{rows}
+    </select>
+    <select id="getNextNote" parameterType="map" resultMap="note">
+        select * from note where id = (select min(id) from note where id > #{id}) and userid = #{userid}
+    </select>
+    <select id="getPreviousNote" parameterType="map" resultMap="note">
+        select * from note where id = (select max(id) from note where id &lt; #{id}) and userid = #{userid}
+    </select>
+    <!--访问次数递增-->
+    <update id="incViews" parameterType="java.lang.Integer">
+        update note set views = views + 1 where id = #{id}
+    </update>
+    <!--删除博客-->
+    <delete id="deleteNote" parameterType="java.lang.Integer">
+        delete from note where id = #{id}
+    </delete>
+    <update id="updateTags" parameterType="map">
+        update note set tags = replace(tags, concat(',', #{old}, ','), concat(',', #{new}, ',')) where userid = #{userid};
+    </update>
+
+</mapper>
